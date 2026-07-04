@@ -1,6 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import TokenService from '../helper';
-
+import { createRouter, createWebHistory } from 'vue-router'
+// import TokenService from '../helper'
 import ViewLogin from '@/modules/login/router';
 import ViewHome from '@/modules/home/router';
 import ViewDemo from '@/modules/demo/router';
@@ -20,21 +19,21 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const metaAuth = to.meta.auth;
-  const token = TokenService.getToken();
+  // const metaAuth = to.meta.auth
+  // const token = TokenService.getToken()
 
-  if (metaAuth && !token) {
-    next({ name: 'login' });
-  }
+  // if (metaAuth && !token) {
+  //   return next({ name: 'login' })
+  // }
 
-  if (to.name === 'login' && token) {
-    next({ name: 'demo' });
-  }
-  next()
+  // if (to.name === 'login' && token) {
+  //   return next({ name: 'demo' })
+  // }
+
+  return next()
 })
 
 router.afterEach((to) => {
   document.title = to.meta.title;
 });
-
 export default router;

@@ -1,32 +1,85 @@
 <script setup>
-  import { onMounted, ref } from "vue";
-  import { useDemoStore } from "./store";
+import { onMounted } from "vue";
+import { useDemoStore } from "./store";
 
-  import { RepositoryFactory } from "@/repositories/repository-factory";
-  const demo = RepositoryFactory.get("demo");
+import { BaseTable } from "@/components/table";
+import tableConfig from "./config/table.js";
 
-  const products = ref([]);
-  const getData = async () => {
-    const response = await demo.getProducts();
-    if (response.success) {
-      products.value = response?.data?.data;
-    }
-  };
+const demoStore = useDemoStore();
 
-  const demoStore = useDemoStore();
-  const updateMessage = () => {
-    demoStore.setMessage("Hello guy!");
-  };
+const handleAction = ({ action, row }) => {
+  console.log(`[${action}]`, row);
+};
 
-  onMounted(() => {
-    getData();
-  });
+const updateMessage = () => {
+  demoStore.setMessage("Hello guy!");
+};
+
+onMounted(() => {
+  demoStore.fetchProducts();
+});
 </script>
 
 <template>
-  <div class="demo">
-    Message: {{ demoStore.message }} <br />
-    Uppercase message: {{ demoStore.uppercaseMessage }} <br />
-    <button @click="updateMessage">Change message</button>
+  <div class="demo space-y-4">
+    <div>
+      Message: {{ demoStore.message }} <br />
+
+      Uppercase message: {{ demoStore.uppercaseMessage }} <br />
+
+      <button class="mt-2 text-blue-600 hover:underline" @click="updateMessage">
+        Change message
+      </button>
+    </div>
+
+
+    <BaseTable
+      show-checkbox
+      :columns="tableConfig.columns"
+      :data="demoStore.products"
+      :loading="demoStore.loading"
+      :actions="tableConfig.rowActions"
+      show-actions
+      empty-text="No products found"
+      @action="handleAction"
+    >
+      <template #header-price="{ column }">
+        <span class="text-green-700">{{ column.label }} ($)</span>
+      </template>
+
+      <template #cell-price="{ value }">
+        <span class="font-medium text-green-700">${{ value }}</span>
+      </template>
+
+      <template #cell-title="{ row }">
+        <div class="font-medium">{{ row.title }}</div>
+
+        <div class="text-xs text-gray-500">{{ row.category }}</div>
+      </template>
+
+      <!-- Tùy chỉnh header cột actions -->
+      <!-- <template #header-actions>
+        <span class="text-blue-600">⚙ Thao tác</span>
+      </template> -->
+
+      <!-- Tùy chỉnh nút actions từng row -->
+      <!-- <template #actions="{ row, actions }">
+        <button
+          v-for="action in actions"
+          :key="action.key"
+          type="button"
+          class="rounded px-2 py-1 text-sm"
+          :class="
+            action.key === 'delete'
+              ? 'text-red-600 hover:bg-red-50'
+              : 'text-blue-600 hover:bg-blue-50'
+          "
+          @click="handleAction({ action: action.key, row })"
+        >
+          {{ action.key === 'view' ? '👁' : action.key === 'edit' ? '✏' : '🗑' }}
+          {{ action.label }}
+        </button>
+      </template> -->
+    </BaseTable>
   </div>
 </template>

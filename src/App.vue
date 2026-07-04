@@ -13,7 +13,6 @@
     </Transition>
   </router-view>
 </template>
-
 <style>
   .nav {
     margin-bottom: 20px;
@@ -23,3 +22,4 @@
     padding-right: 10px;
   }
 </style>
+
