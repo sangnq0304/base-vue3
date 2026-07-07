@@ -7,9 +7,26 @@ import tableConfig from "./config/table.js";
 
 const demoStore = useDemoStore();
 
-const handleAction = ({ action, row }) => {
-  console.log(`[${action}]`, row);
-};
+const handleAction = async ({ action, row }) => {
+  if (action === 'view') {
+    const product = await demoStore.fetchProduct(row.id)
+    console.log('[view]', product ?? row)
+    return
+  }
+
+  if (action === 'edit') {
+    await demoStore.updateProduct(row.id, {
+      title: `${row.title} (updated)`,
+    })
+    return
+  }
+
+  if (action === 'delete') {
+    if (window.confirm(`Delete "${row.title}"?`)) {
+      await demoStore.deleteProduct(row.id)
+    }
+  }
+}
 
 const updateMessage = () => {
   demoStore.setMessage("Hello guy!");
@@ -32,6 +49,9 @@ onMounted(() => {
       </button>
     </div>
 
+    <p v-if="demoStore.error" class="text-sm text-red-500">
+      {{ demoStore.error }}
+    </p>
 
     <BaseTable
       show-checkbox

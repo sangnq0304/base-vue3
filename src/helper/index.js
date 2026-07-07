@@ -7,7 +7,7 @@ const TokenService = {
   },
 
   setToken(token) {
-    document.cookie = `${TOKEN_KEY}=${token}; expires=${new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toUTCString()}`
+    document.cookie = `${TOKEN_KEY}=${token}; path=/; expires=${new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toUTCString()}`
   },
 
   removeToken() {
