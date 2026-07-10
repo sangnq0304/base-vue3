@@ -1,89 +1,92 @@
 <script setup>
-import { onMounted } from "vue";
-import { useDemoStore } from "./store";
+import { onMounted } from 'vue';
+import { useDemoStore } from './store';
 
-import { BaseTable } from "@/components/table";
-import tableConfig from "./config/table.js";
+import { BaseTable } from '@/components/table';
+import tableConfig from './config/table.js';
 
 const demoStore = useDemoStore();
 
 const handleAction = async ({ action, row }) => {
-  if (action === 'view') {
-    const product = await demoStore.fetchProduct(row.id)
-    console.log('[view]', product ?? row)
-    return
-  }
-
-  if (action === 'edit') {
-    await demoStore.updateProduct(row.id, {
-      title: `${row.title} (updated)`,
-    })
-    return
-  }
-
-  if (action === 'delete') {
-    if (window.confirm(`Delete "${row.title}"?`)) {
-      await demoStore.deleteProduct(row.id)
+    if (action === 'view') {
+        const product = await demoStore.fetchProduct(row.id);
+        console.log('[view]', product ?? row);
+        return;
     }
-  }
-}
+
+    if (action === 'edit') {
+        await demoStore.updateProduct(row.id, {
+            title: `${row.title} (updated)`,
+        });
+        return;
+    }
+
+    if (action === 'delete') {
+        if (window.confirm(`Delete "${row.title}"?`)) {
+            await demoStore.deleteProduct(row.id);
+        }
+    }
+};
 
 const updateMessage = () => {
-  demoStore.setMessage("Hello guy!");
+    demoStore.setMessage('Hello guy!');
 };
 
 onMounted(() => {
-  demoStore.fetchProducts();
+    demoStore.fetchProducts();
 });
 </script>
 
 <template>
-  <div class="demo space-y-4">
-    <div>
-      Message: {{ demoStore.message }} <br />
+    <div class="demo space-y-4">
+        <div>
+            Message: {{ demoStore.message }} <br />
 
-      Uppercase message: {{ demoStore.uppercaseMessage }} <br />
+            Uppercase message: {{ demoStore.uppercaseMessage }} <br />
 
-      <button class="mt-2 text-blue-600 hover:underline" @click="updateMessage">
-        Change message
-      </button>
-    </div>
+            <button
+                class="mt-2 text-blue-600 hover:underline"
+                @click="updateMessage"
+            >
+                Change message
+            </button>
+        </div>
 
-    <p v-if="demoStore.error" class="text-sm text-red-500">
-      {{ demoStore.error }}
-    </p>
+        <p v-if="demoStore.error" class="text-sm text-red-500">
+            {{ demoStore.error }}
+        </p>
 
-    <BaseTable
-      show-checkbox
-      :columns="tableConfig.columns"
-      :data="demoStore.products"
-      :loading="demoStore.loading"
-      :actions="tableConfig.rowActions"
-      show-actions
-      empty-text="No products found"
-      @action="handleAction"
-    >
-      <template #header-price="{ column }">
-        <span class="text-green-700">{{ column.label }} ($)</span>
-      </template>
+        <BaseTable
+            show-checkbox
+            :columns="tableConfig.columns"
+            :data="demoStore.products"
+            :loading="demoStore.loading"
+            :actions="tableConfig.rowActions"
+            show-actions
+            empty-text="No products found"
+            @action="handleAction"
+        >
+            <template #header-price="{ column }">
+                <span class="text-green-700">{{ column.label }} ($)</span>
+            </template>
 
-      <template #cell-price="{ value }">
-        <span class="font-medium text-green-700">${{ value }}</span>
-      </template>
+            <template #cell-price="{ value }">
+                <span class="font-medium text-green-700">${{ value }}</span>
+            </template>
 
-      <template #cell-title="{ row }">
-        <div class="font-medium">{{ row.title }}</div>
+            <template #cell-title="{ row }">
+                <div class="font-medium">{{ row.title }}</div>
 
-        <div class="text-xs text-gray-500">{{ row.category }}</div>
-      </template>
+                <div class="text-xs text-gray-500">{{ row.category }}</div>
+            </template>
 
-      <!-- Tùy chỉnh header cột actions -->
-      <!-- <template #header-actions>
+            <!-- Tùy chỉnh header cột actions -->
+            <!-- <template #header-actions>
         <span class="text-blue-600">⚙ Thao tác</span>
       </template> -->
 
-      <!-- Tùy chỉnh nút actions từng row -->
-      <!-- <template #actions="{ row, actions }">
+            <!-- Tùy chỉnh nút actions từng row -->
+            <!-- <template #actions="{ row, actions }">
         <button
           v-for="action in actions"
           :key="action.key"
@@ -100,6 +103,6 @@ onMounted(() => {
           {{ action.label }}
         </button>
       </template> -->
-    </BaseTable>
-  </div>
+        </BaseTable>
+    </div>
 </template>

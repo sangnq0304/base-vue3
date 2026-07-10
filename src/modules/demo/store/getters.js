@@ -1,3 +1,3 @@
 export default {
-  uppercaseMessage: (state) => state.message.toUpperCase()
-}
+    uppercaseMessage: (state) => state.message.toUpperCase(),
+};

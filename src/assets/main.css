@@ -1,19 +1,20 @@
 @import './transition.css';
-*,body {
-  margin: 0;
-  padding: 0;
-  color: black;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-  overflow-x: hidden;
+*,
+body {
+    margin: 0;
+    padding: 0;
+    color: black;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-x: hidden;
 }
 
-:is(h1,h2,h3,h4,h5,h6, ul) {
-  margin: 0;
-  padding: 0;
+:is(h1, h2, h3, h4, h5, h6, ul) {
+    margin: 0;
+    padding: 0;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }

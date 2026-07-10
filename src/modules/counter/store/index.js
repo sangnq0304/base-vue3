@@ -4,7 +4,7 @@ import getters from './getters';
 import actions from './actions';
 
 export const useCounterStore = defineStore('counter', {
-  state: () => state,
-  getters,
-  actions
-})
+    state: () => state,
+    getters,
+    actions,
+});

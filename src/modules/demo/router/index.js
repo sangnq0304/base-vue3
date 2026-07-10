@@ -1,8 +1,8 @@
-import ViewDemo from '@/modules/demo/ViewDemo.vue'
+import ViewDemo from '@/modules/demo/ViewDemo.vue';
 
 export default {
-  path: 'demo',
-  name: 'demo',
-  meta: { title: 'demo', auth: true },
-  component: ViewDemo,
-}
+    path: 'demo',
+    name: 'demo',
+    meta: { title: 'demo', auth: true },
+    component: ViewDemo,
+};

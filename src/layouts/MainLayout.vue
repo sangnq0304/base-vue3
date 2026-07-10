@@ -1,20 +1,20 @@
 <template>
-  <div class="layout">
-    <div class="nav">
-      <router-link to="/">Home</router-link>
-      <router-link to="/demo">Demo</router-link>
-      <router-link to="/counter">Counter</router-link>
+    <div class="layout">
+        <div class="nav">
+            <router-link to="/">Home</router-link>
+            <router-link to="/demo">Demo</router-link>
+            <router-link to="/counter">Counter</router-link>
+        </div>
+        <router-view />
     </div>
-    <router-view />
-  </div>
 </template>
 
 <style scoped>
 .nav {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .nav a {
-  padding-right: 10px;
+    padding-right: 10px;
 }
 </style>

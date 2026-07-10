@@ -1,9 +1,9 @@
 export default {
-  increaseCount() {
-    this.count++
-  },
+    increaseCount() {
+        this.count++;
+    },
 
-  decreaseCount() {
-    this.count--
-  }
-}
+    decreaseCount() {
+        this.count--;
+    },
+};
