@@ -1,20 +1,30 @@
 <template>
-    <div class="layout">
-        <div class="nav">
-            <router-link to="/">Home</router-link>
-            <router-link to="/demo">Demo</router-link>
-            <router-link to="/counter">Counter</router-link>
+    <div class="h-screen overflow-hidden bg-content">
+        <div class="flex h-full pl-[260px]">
+            <BaseSidebar />
+            <main class="flex min-w-0 flex-1 flex-col">
+                <BaseHeader />
+                <div class="flex-1 overflow-y-auto p-6">
+                    <router-view />
+                </div>
+            </main>
         </div>
-        <router-view />
     </div>
 </template>
 
-<style scoped>
-.nav {
-    margin-bottom: 20px;
-}
+<script>
+import { defineComponent } from 'vue';
 
-.nav a {
-    padding-right: 10px;
-}
-</style>
+import BaseSidebar from '@/components/BaseSidebar.vue';
+import BaseHeader from '@/components/BaseHeader.vue';
+
+export default defineComponent({
+    name: 'MainLayout',
+    components: {
+        BaseSidebar,
+        BaseHeader
+    },
+
+    setup() {}
+})
+</script>
